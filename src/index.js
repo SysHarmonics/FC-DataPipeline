@@ -20,6 +20,9 @@ export default async function lambdaSearch(sku, context = () => {}) {
         if (response.data && response.data.results && response.data.results[0]) {
             const hits = response.data.results[0].hits;
             if (hits && hits.length > 0) {
+
+               const { name, story: description, sku: searchSku, product_taxonomy: { lvl0: branding} , color, original_picture_url: imageURL, size_range: sizeRange } = hits[0];
+                /*  
                 const Name = hits[0].name;
                 const branding = hits[0].product_taxonomy.lvl0;
                 const color = hits[0].color;
@@ -27,9 +30,10 @@ export default async function lambdaSearch(sku, context = () => {}) {
                 const sizeRange = hits[0].size_range;
                 const searchSku = hits[0].sku
                 const description = hits[0].story;
+                */
 
                 let sneaker = new Object();
-                sneaker.name = Name;
+                sneaker.name = name;
                 sneaker.description = description;
                 sneaker.branding = branding;
                 sneaker.color = color;
