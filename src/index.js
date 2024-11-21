@@ -19,8 +19,32 @@ export default async function lambdaSearch(sku, context = () => {}) {
         const response = await axios.post(url, options.data, {headers: options.headers });
         if (response.data && response.data.results && response.data.results[0]) {
             const hits = response.data.results[0].hits;
-            console.log("Search Results Hits:", hits);
-            context(null, hits);
+            if (hits && hits.length > 0) {
+                const Name = hits[0].name;
+                const branding = hits[0].product_taxonomy.lvl0;
+                const color = hits[0].color;
+                const imageURL = hits[0].original_picture_url;
+                const sizeRange = hits[0].size_range;
+                const searchSku = hits[0].sku
+                const description = hits[0].story;
+
+                let sneaker = new Object();
+                sneaker.name = Name;
+                sneaker.description = description;
+                sneaker.branding = branding;
+                sneaker.color = color;
+                sneaker.imageURL = imageURL;
+                sneaker.sizeRange = sizeRange;
+                sneaker.searchSku = searchSku;
+
+                Object.keys(sneaker).forEach(key => {
+                    console.log(key + ": " + sneaker[key]);
+                })
+
+               // console.log("", description);
+            }
+            // console.log("Search Results Hits:", hits);
+            // context(null, hits);
         }
     } catch (error) {
             if (!error.response) {
