@@ -21,7 +21,7 @@ export default async function lambdaSearch(sku, context = () => {}) {
             const hits = response.data.results[0].hits;
             if (hits && hits.length > 0) {
 
-               const { name, story: description, sku: searchSku, product_taxonomy: { lvl0: branding} , color, original_picture_url: imageURL, size_range: sizeRange } = hits[0];
+               const { name, story: description, sku, product_taxonomy: { lvl0: branding} , color, original_picture_url: imageURL, size_range: sizeRange } = hits[0];
                 /*  
                 const Name = hits[0].name;
                 const branding = hits[0].product_taxonomy.lvl0;
@@ -32,14 +32,15 @@ export default async function lambdaSearch(sku, context = () => {}) {
                 const description = hits[0].story;
                 */
 
-                let sneaker = new Object();
-                sneaker.name = name;
-                sneaker.description = description;
-                sneaker.branding = branding;
-                sneaker.color = color;
-                sneaker.imageURL = imageURL;
-                sneaker.sizeRange = sizeRange;
-                sneaker.searchSku = searchSku;
+                let sneaker = { 
+                    name,
+                    description,
+                    sku,
+                    branding,
+                    color,
+                    imageURL,
+                    sizeRange
+                 }
 
                 Object.keys(sneaker).forEach(key => {
                     console.log(key + ": " + sneaker[key]);
