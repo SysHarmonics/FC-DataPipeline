@@ -1,10 +1,30 @@
 import axios from 'axios';
+import { splitValidation } from './utils/helperFunctions.js';
+import readline from 'readline';
+
+
+// let input = prompt("Enter sku's separated by commas:");
+// const inputSku = splitValidation(input);
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Enter SKU's separated by commas: ", (input) => {
+    const inputSku = splitValidation(input);
+
+    inputSku.forEach((sku) => {
+        lambdaSearch(sku);
+    });
+
+    rl.close();
+});
 
 export default async function lambdaSearch(sku, context = () => {}) {
     const url = "https://2fwotdvm2o-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(4.14.3)%3B%20Browser%20(lite)%3B%20JS%20Helper%20(3.11.1)%3B%20react%20(18.2.0)%3B%20react-instantsearch%20(6.38.1)&x-algolia-api-key=10cf0ae11ca33a8c7c80a8c6bd926bdf&x-algolia-application-id=2FWOTDVM2O";
 
     var options = {
-        url: "https://2fwotdvm2o-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(4.14.3)%3B%20Browser%20(lite)%3B%20JS%20Helper%20(3.11.1)%3B%20react%20(18.2.0)%3B%20react-instantsearch%20(6.38.1)&x-algolia-api-key=10cf0ae11ca33a8c7c80a8c6bd926bdf&x-algolia-application-id=2FWOTDVM2O",
         data: `{
             "requests": [{
                 "indexName": "product_variants_v2_flight_club",
@@ -66,4 +86,4 @@ export default async function lambdaSearch(sku, context = () => {}) {
 }
 
 
-lambdaSearch("hq4540");
+// inputSku.forEach((sku) => lambdaSearch(sku));
